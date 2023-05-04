@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Razor.Models;
+using System.Configuration;
 using System.Data.SqlClient;
 
 namespace Razor.Controllers
 {
+
     public class UserController : Controller
     {
+        // public IConfigurationRoot Configuration { get; set; }
+
+
         // GET: UserController
         public ActionResult Index()
         {
@@ -16,13 +21,16 @@ namespace Razor.Controllers
         public ActionResult Listar()
         {
 
-          //string cnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cnStr"].ToString();
-            string cnStr = "Server=(local);Database=Facturacion;User Id=sa;Password=poison;TrustServerCertificate=True";
+            //string cnStr = System.Configuration.ConfigurationManager.ConnectionStrings["cnStr"].ToString();
+
+            string cnStr = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("ConnectionStrings")["cnStr"];
+
+            //string cnStr = "Server=(local);Database=Facturacion;User Id=sa;Password=poison;TrustServerCertificate=True";
 
             SqlConnection Cn = new SqlConnection(cnStr);
             SqlCommand Cmd = new SqlCommand("sp_apirest_listar", Cn);
             Cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            Cmd.Parameters.AddWithValue("filtro", "MA");
+            Cmd.Parameters.AddWithValue("filtro", "");
             Cn.Open();
           //Cmd.ExecuteNonQuery();
 
