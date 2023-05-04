@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Razor.Models;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Razor.Controllers
 {
@@ -30,12 +32,14 @@ namespace Razor.Controllers
             SqlConnection Cn = new SqlConnection(cnStr);
             SqlCommand Cmd = new SqlCommand("sp_apirest_listar", Cn);
             Cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            Cmd.Parameters.AddWithValue("filtro", "");
+            Cmd.Parameters.AddWithValue("filtro", "EL");
             Cn.Open();
           //Cmd.ExecuteNonQuery();
 
             SqlDataReader Dr;
             Dr = Cmd.ExecuteReader();
+
+
             List<User> lUsers = new List<User>();
             lUsers.Clear();
             while (Dr.Read())
