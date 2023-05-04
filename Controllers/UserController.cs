@@ -29,7 +29,7 @@ namespace Razor.Controllers
 
             //string cnStr = "Server=(local);Database=Facturacion;User Id=sa;Password=poison;TrustServerCertificate=True";
 
-            SqlConnection Cn = new SqlConnection(cnStr);
+            SqlConnection Cn = new SqlConnection(cnStr); 
             SqlCommand Cmd = new SqlCommand("sp_apirest_listar", Cn);
             Cmd.CommandType = System.Data.CommandType.StoredProcedure;
             Cmd.Parameters.AddWithValue("filtro", "EL");
